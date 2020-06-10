@@ -1,0 +1,33 @@
+//--------------------------------------------------------------------------
+// Appendices
+//--------------------------------------------------------------------------
+== Additional Information (_Appendicies_)
+This section includes references to any product or technology that is relevant to this repository, including a full set of repository documentation.
+
+[appendix]
+=== Red Hat Product Documentation
+This repository is focused on business automation using Red Hat's Business Automation products.  The following online documentation is available in order to learn various aspects of the products:
+
+* **Red Hat Middleware Process Automation** - For applications that require full process (BPM) as well as decision services (BRMS), Red Hat Process Automation Manager is a the latest version of the full BPM/BRMS product.  This product was formally known as JBoss BPM Suite 6.4, which contained both the BRMS as well as the BPM engine and tooling. For applications that only require decision services (BRMS) a scaled down version of the product is available, known as Red Hat Decision Manager.
+
+** https://access.redhat.com/documentation/en-us/red_hat_process_automation_manager/{rhba-version}/[*Red Hat Process Automation Manager 7 Documentation*] is the enterprise (supported) version of the full BPM/BRMS product and thus the first place to look for information.  Additional sources of information or product documentation can be found in the community versions of the product documentation:
+
+*** https://docs.jboss.org/jbpm/release/{jbpm-version}/jbpm-docs/html_single/[jBPM] is the community version of the process (BPM) side of the Red Hat Process Automation Manager product and thus the source of the codebase as well as examples and documentation.  If you are looking for places to learn BPM and other BPM-related stuff, this is a great place to start. 
+
+*** https://docs.jboss.org/drools/release/{drools-version}/drools-docs/html_single/index.html[Drools] is the community version of the decision services (BRMS) side of the Red Hat Process Automation Manager (RHPAM) product and thus the source of the codebase as well as examples and documentation.  If you are looking for places to learn DRL and other BRMS-related stuff, this is a great place to start.  
+
+** https://access.redhat.com/documentation/en-us/red_hat_decision_manager/{rhba-version}/[*Red Hat Decision Manager 7 Documentation*] is the enterprise (supported) version of the decision management (rules) portion of the Red Hat Process Automation Manager product.  This is for applications or projects that only require decision services (rules) with no long running process support.
+
+*** https://docs.jboss.org/drools/release/{drools-version}/drools-docs/html_single/index.html[Drools] is the community version of the Red Hat Decision Manager product and thus the source of the codebase as well as examples and documentation.  If you are looking for places to learn DRL and other BRMS-related stuff, this is a great place to start.  
+
+* **Red Hat OpenShift Container Platform (RHOCP)** - Containers are standalone processes that run within their own environment, independent of the operating system and the underlying infrastructure. OpenShift helps you to develop, deploy, and manage container-based applications. It provides you with a self-service platform to create, modify, and deploy applications on demand, thus enabling faster development and release life cycles.
+
+** https://access.redhat.com/documentation/en-us/openshift_container_platform/{ocp-version}/[*Red Hat OpenShift Container Platform Documentation*] for applications that will be based on a containerized architecture.
+
+[appendix]
+=== Other Product Documentation
+This repository is focused on business automation using Red Hat's Business Automation products, which in turn rely on various open source tools and technology.  The following online documentation is available in order to learn various aspects of these tools:
+
+** https://maven.apache.org/[*Apache Maven*] is a free and open source software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project's build, reporting and documentation from a central piece of information. A *getting started guide* is available http://maven.apache.org/guides/getting-started/[here].
+
+** https://git-scm.com//[*Git*] is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.  There is a *handbook* available https://guides.github.com/introduction/git-handbook/[here], as well as various *guides* for learning and working with Git available https://guides.github.com/[here].

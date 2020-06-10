@@ -1,0 +1,123 @@
+//--------------------------------------------------------------------------
+// Document Information
+//--------------------------------------------------------------------------
+:title: Red Hat Business Automation
+:sub-title: Platform Parent
+:description: This repository contains the platform parent POM for use by all Business Automation projects.  
+
+//--------------------------------------------------------------------------
+// Document Variables
+//--------------------------------------------------------------------------
+:rhba-version: 7.7
+:jbpm-version: 7.33.0.Final
+:drools-version: 7.33.0.Final
+:ocp-version: 3.11
+
+//--------------------------------------------------------------------------
+// Asciidoc Settings
+//--------------------------------------------------------------------------
+:doctype: book
+:toc: preamble
+:toclevels: 4 
+:sectnums:
+:sectnumlevels: 4
+
+//--------------------------------------------------------------------------
+// Document Title
+//--------------------------------------------------------------------------
+= {title} - {sub-title}
+
+{description}
+
+//--------------------------------------------------------------------------
+// Begin Content Here
+//--------------------------------------------------------------------------
+== Getting Started
+As the parent `pom.xml` contains all of the dependency version and repository information, it must be the first artifact built, as the other projects which are based on this new parent require that the Maven cache contains all of the referenced dependencies.  This is accomplished differently, depending upon what type of build the user is performing:
+
+=== Local Development Envionment Build
+If you are performing a local build on your development machine, utilizing your local Maven repository, you need to run the following command on the `rhba-platform-parent` repository first:  `mvn clean install` which downloads and installs all the dependencies specified in the parent pom.xml into your local Maven cache.  From there you can now run `mvn clean install` on each repository.
+
+=== Enterprise Build (possibly via Jenkins)
+If you are performing a build based on the enterprise Maven repository, either directly or via Jenkins, the order in which you do a Maven build is the same as a local build, the `rhba-platform-parent` repository should be built before any repository that depends upon it.  You must run the following command on the `rhba-platform-parent` project first: `mvn clean deploy`, which downloads and installs all the dependencies specified in the parent pom.xml into the enterprise Maven cache.  From there you can now run `mvn clean deploy` on each repository.
+
+=== Enterprise Maven Repository Configuration
+In order for Process (KIE) Server and Business Central to be able to use to the enterprise Maven repository, you must configure your POMs to point to your enterprise Maven repository, as in the following example:
+
+[source,xml]
+-----
+	<!-- Enterprise Artifact Repository -->
+	<distributionManagement>
+		<repository>
+			<id>release-central</id>
+			<name>release-central</name>
+			<url>${server.url}</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>snapshot-central</id>
+			<name>snapshot-central</name>
+			<url>${server.url}</url>
+		</snapshotRepository>
+	</distributionManagement>
+-----
+
+Then on the server hosting either Business Central (BC) or Process (KIE) Server Server, add the following code snippit to the `settings.xml` file wherever your enterprise repository is configured:
+
+[source,xml]
+-----
+	<servers>
+        <!-- Enterprise Artifact Release Server Configuration -->
+        <server>
+            <id>release-central</id>
+            <username>${username}</username>
+            <password>${password}</password>
+        </server>
+
+        <server>
+            <id>snapshot-central</id>
+            <username>${username}</username>
+            <password>${password}</password>
+        </server>
+	</servers>
+-----
+
+Notice how the *id* tag in the *server* config in `settings.xml` lines up the *id* tag in the *repository* config of the `pom.xml` file!
+
+//--------------------------------------------------------------------------
+// End Content Here
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Appendices
+//--------------------------------------------------------------------------
+== Additional Information (_Appendicies_)
+This section includes references to any product or technology that is relevant to this repository, including a full set of repository documentation.
+
+[appendix]
+=== Red Hat Product Documentation
+This repository is focused on business automation using Red Hat's Business Automation products.  The following online documentation is available in order to learn various aspects of the products:
+
+* **Red Hat Middleware Process Automation** - For applications that require full process (BPM) as well as decision services (BRMS), Red Hat Process Automation Manager is a the latest version of the full BPM/BRMS product.  This product was formally known as JBoss BPM Suite 6.4, which contained both the BRMS as well as the BPM engine and tooling. For applications that only require decision services (BRMS) a scaled down version of the product is available, known as Red Hat Decision Manager.
+
+** https://access.redhat.com/documentation/en-us/red_hat_process_automation_manager/{rhba-version}/[*Red Hat Process Automation Manager 7 Documentation*] is the enterprise (supported) version of the full BPM/BRMS product and thus the first place to look for information.  Additional sources of information or product documentation can be found in the community versions of the product documentation:
+
+*** https://docs.jboss.org/jbpm/release/{jbpm-version}/jbpm-docs/html_single/[jBPM] is the community version of the process (BPM) side of the Red Hat Process Automation Manager product and thus the source of the codebase as well as examples and documentation.  If you are looking for places to learn BPM and other BPM-related stuff, this is a great place to start. 
+
+*** https://docs.jboss.org/drools/release/{drools-version}/drools-docs/html_single/index.html[Drools] is the community version of the decision services (BRMS) side of the Red Hat Process Automation Manager (RHPAM) product and thus the source of the codebase as well as examples and documentation.  If you are looking for places to learn DRL and other BRMS-related stuff, this is a great place to start.  
+
+** https://access.redhat.com/documentation/en-us/red_hat_decision_manager/{rhba-version}/[*Red Hat Decision Manager 7 Documentation*] is the enterprise (supported) version of the decision management (rules) portion of the Red Hat Process Automation Manager product.  This is for applications or projects that only require decision services (rules) with no long running process support.
+
+*** https://docs.jboss.org/drools/release/{drools-version}/drools-docs/html_single/index.html[Drools] is the community version of the Red Hat Decision Manager product and thus the source of the codebase as well as examples and documentation.  If you are looking for places to learn DRL and other BRMS-related stuff, this is a great place to start.  
+
+* **Red Hat OpenShift Container Platform (RHOCP)** - Containers are standalone processes that run within their own environment, independent of the operating system and the underlying infrastructure. OpenShift helps you to develop, deploy, and manage container-based applications. It provides you with a self-service platform to create, modify, and deploy applications on demand, thus enabling faster development and release life cycles.
+
+** https://access.redhat.com/documentation/en-us/openshift_container_platform/{ocp-version}/[*Red Hat OpenShift Container Platform Documentation*] for applications that will be based on a containerized architecture.
+
+[appendix]
+=== Other Product Documentation
+This repository is focused on business automation using Red Hat's Business Automation products, which in turn rely on various open source tools and technology.  The following online documentation is available in order to learn various aspects of these tools:
+
+** https://maven.apache.org/[*Apache Maven*] is a free and open source software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project's build, reporting and documentation from a central piece of information. A *getting started guide* is available http://maven.apache.org/guides/getting-started/[here].
+
+** https://git-scm.com//[*Git*] is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.  There is a *handbook* available https://guides.github.com/introduction/git-handbook/[here], as well as various *guides* for learning and working with Git available https://guides.github.com/[here].
